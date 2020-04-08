@@ -1,44 +1,46 @@
 package service;
 
-import DAO.UserHibernateDAO;
-import DAO.UserJdbcDAO;
+import DAO.UserDAOFactory;
 import model.User;
-import org.hibernate.SessionFactory;
-import util.DBHelper;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class UserService {
 
-    private static UserService userService;
+    private static final UserService userService;
+    private static final UserDAOFactory userDAOFactory;
 
-    private SessionFactory sessionFactory;
+    private UserService() {
+    }
 
-    private UserService(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    static {
+        userService = new UserService();
+        userDAOFactory = UserDAOFactory.getInstance();
     }
 
     public static UserService getInstance() {
-        if (userService == null) {
-            userService = new UserService(DBHelper.getSessionFactory());
-        }
         return userService;
     }
 
+
     public List<User> getAllUsers() throws SQLException {
-        return new UserHibernateDAO(sessionFactory.openSession()).getAllUsers();
+        return userDAOFactory.getDAO().getAllUsers();
     }
 
     public void addUser(User user) throws SQLException {
-        new UserHibernateDAO(sessionFactory.openSession()).addUser(user);
+        userDAOFactory.getDAO().addUser(user);
     }
 
     public void deleteUser(Long id) throws SQLException {
-        new UserHibernateDAO(sessionFactory.openSession()).deleteUser(id);
+        userDAOFactory.getDAO().deleteUser(id);
     }
 
-    public void updateUser(String name,Long id) throws SQLException {
-        new UserHibernateDAO(sessionFactory.openSession()).updateUser(name,id);
+    public void updateUser(String firstName, String lastName, Long id) throws SQLException {
+        userDAOFactory.getDAO().updateUser(firstName, lastName, id);
+    }
+
+    public User getUserById(Long id) throws SQLException {
+        return userDAOFactory.getDAO().getUserById(id);
     }
 }
