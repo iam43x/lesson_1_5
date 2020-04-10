@@ -41,13 +41,14 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
-    public void updateUser(String firstName, String lastName, Long id) {
+    public void updateUser(String login, String password, String role, Long id) {
         Session session = DBHelper.getSession();
         Transaction transaction = session.beginTransaction();
-        session.createQuery("update from User u set u.firstName=:firstName, u.lastName=:lastName where id=:id").
+        session.createQuery("update from User u set u.login=:login, u.password=:password,u.role=:role where id=:id").
                 setParameter("id", id).
-                setParameter("firstName", firstName).
-                setParameter("lastName", lastName).executeUpdate();
+                setParameter("login", login).
+                setParameter("password", password).
+                setParameter("role", role).executeUpdate();
         transaction.commit();
         session.close();
     }
@@ -61,5 +62,19 @@ public class UserHibernateDAO implements UserDAO {
         transaction.commit();
         session.close();
         return users.get(0);
+    }
+
+    @Override
+    public String availableUser(String login, String password) throws SQLException {
+        Session session = DBHelper.getSession();
+        Transaction transaction = session.beginTransaction();
+        List<User> users = session.createQuery("from User where login=:login and password=:password").
+                setParameter("login", login).setParameter("password", password).list();
+        transaction.commit();
+        session.close();
+        if(!users.isEmpty()){
+            return users.get(0).getRole();
+        }
+        return "";
     }
 }

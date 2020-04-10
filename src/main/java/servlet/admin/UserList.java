@@ -1,4 +1,4 @@
-package servlet;
+package servlet.admin;
 
 import model.User;
 import service.UserService;
@@ -12,19 +12,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/del")
-public class DeleteUser extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+@WebServlet("/admin")
+public class UserList extends HttpServlet {
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Long id = Long.parseLong(req.getParameter("id"));
-            UserService.getInstance().deleteUser(id);
             List<User> users = UserService.getInstance().getAllUsers();
             req.setAttribute("users", users);
-            req.getRequestDispatcher("users.jsp").forward(req, resp);
-        } catch (Exception e) {
+            req.getRequestDispatcher("admin/admin.jsp").forward(req, resp);
+        } catch (SQLException e) {
             e.printStackTrace();
+
         }
     }
 }

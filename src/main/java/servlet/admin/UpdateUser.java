@@ -1,4 +1,4 @@
-package servlet;
+package servlet.admin;
 
 import model.User;
 import service.UserService;
@@ -12,26 +12,35 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/add")
-public class AddUser extends HttpServlet {
-
+@WebServlet("/admin/updt")
+public class UpdateUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        String firstName = req.getParameter("firstName");
-        String lastName = req.getParameter("lastName");
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        String role = req.getParameter("role");
         try {
-            UserService.getInstance().addUser(new User(firstName, lastName));
+            Long id = Long.parseLong(req.getParameter("id"));
+            UserService.getInstance().updateUser(login, password, role, id);
             List<User> users = UserService.getInstance().getAllUsers();
             req.setAttribute("users", users);
-            req.getRequestDispatcher("users.jsp").forward(req, resp);
+            req.getRequestDispatcher("admin.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("create.jsp").forward(req, resp);
+        try {
+            Long id = Long.parseLong(req.getParameter("id"));
+            User user = UserService.getInstance().getUserById(id);
+            req.setAttribute("user", user);
+            req.getRequestDispatcher("update.jsp").forward(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -11,26 +11,30 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "firstName")
-    private String firstName;
+    @Column(name = "login")
+    private String login;
 
-    @Column(name = "lastName")
-    private String lastName;
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "role")
+    private String role;
 
     public User() {
     }
 
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String login, String password, String role) {
+        this.login = login;
+        this.password = password;
+        this.role=role;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getPassword() {
+        return password;
     }
 
-    public User(Long id, String firstName, String lastName) {
-        this(firstName, lastName);
+    public User(Long id, String login, String password, String role) {
+        this(login, password,role);
         this.id = id;
     }
 
@@ -42,19 +46,23 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getLogin() {
+        return login;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + firstName + '\'' +
+                ", name='" + login + '\'' +
                 '}';
     }
 }

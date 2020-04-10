@@ -38,8 +38,8 @@ public class DBHelper {
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
         configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/preproject");
-        configuration.setProperty("hibernate.connection.username", "web3");
-        configuration.setProperty("hibernate.connection.password", "m8MoKaFmlLqD");
+        configuration.setProperty("hibernate.connection.username", "javamentor");
+        configuration.setProperty("hibernate.connection.password", "java");
         configuration.setProperty("hibernate.show_sql", "true");
         configuration.setProperty("hibernate.hbm2ddl.auto", "create-update");
 
@@ -63,8 +63,8 @@ public class DBHelper {
                     append("localhost:").
                     append("3306/").
                     append("preproject?").
-                    append("user=web3&").
-                    append("password=m8MoKaFmlLqD");
+                    append("user=javamentor&").
+                    append("password=java");
             Connection connection = DriverManager.getConnection(url.toString());
             return connection;
         } catch (InstantiationException | SQLException | IllegalAccessException | ClassNotFoundException e) {
