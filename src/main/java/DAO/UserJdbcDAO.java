@@ -30,7 +30,7 @@ public class UserJdbcDAO implements UserDAO {
         ResultSet resultSet = stmt.getResultSet();
         while (resultSet.next()) {
             res.add(new User(resultSet.getLong(1), resultSet.getString(2)
-                    , resultSet.getString(3),resultSet.getString(4)));
+                    , resultSet.getString(3), resultSet.getString(4)));
         }
         stmt.close();
         return res;
@@ -42,20 +42,20 @@ public class UserJdbcDAO implements UserDAO {
                 prepareStatement("insert into user_db (login, password,role) value ((?),(?),(?))");
         pstmt.setString(1, user.getLogin());
         pstmt.setString(2, user.getPassword());
-        pstmt.setString(3,user.getRole());
+        pstmt.setString(3, user.getRole());
         pstmt.execute();
         pstmt.close();
     }
 
     @Override
-    public void updateUser(String login, String password,String role, Long id) throws SQLException {
+    public void updateUser(String login, String password, String role, Long id) throws SQLException {
         PreparedStatement pstmt = DBHelper.getConnection().
                 prepareStatement("Update user_db set login=(?), password=(?),role=(?)" +
                         " where id=(?)");
         pstmt.setString(1, login);
         pstmt.setString(2, password);
         pstmt.setString(3, role);
-        pstmt.setLong(4,id);
+        pstmt.setLong(4, id);
         pstmt.execute();
         pstmt.close();
     }
@@ -80,7 +80,7 @@ public class UserJdbcDAO implements UserDAO {
         String password = resultSet.getString(3);
         String role = resultSet.getString(4);
         pstmt.close();
-        return new User(id, login, password,role);
+        return new User(id, login, password, role);
     }
 
     @Override
@@ -88,10 +88,10 @@ public class UserJdbcDAO implements UserDAO {
         PreparedStatement pstmt = DBHelper.getConnection().
                 prepareStatement("select*from user_db where login=(?) and password=(?)");
         pstmt.setString(1, login);
-        pstmt.setString(2,password);
+        pstmt.setString(2, password);
         ResultSet resultSet = pstmt.executeQuery();
         resultSet.next();
-        String role=resultSet.getString(4);
+        String role = resultSet.getString(4);
         pstmt.close();
         return role;
     }

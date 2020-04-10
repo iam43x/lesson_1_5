@@ -20,9 +20,9 @@ public class AddUser extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        String role= req.getParameter("role");
+        String role = req.getParameter("role");
         try {
-            UserService.getInstance().addUser(new User(login, password,role));
+            UserService.getInstance().addUser(new User(login, password, role));
             List<User> users = UserService.getInstance().getAllUsers();
             req.setAttribute("users", users);
             req.getRequestDispatcher("admin.jsp").forward(req, resp);

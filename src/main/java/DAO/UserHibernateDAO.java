@@ -72,7 +72,7 @@ public class UserHibernateDAO implements UserDAO {
                 setParameter("login", login).setParameter("password", password).list();
         transaction.commit();
         session.close();
-        if(!users.isEmpty()){
+        if (!users.isEmpty()) {
             return users.get(0).getRole();
         }
         return "";

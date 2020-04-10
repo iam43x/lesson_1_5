@@ -15,7 +15,7 @@ import java.util.List;
 public class Registration extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("reg.jsp").forward(req,resp);
+        req.getRequestDispatcher("reg.jsp").forward(req, resp);
     }
 
     @Override
@@ -23,13 +23,13 @@ public class Registration extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        String role="user";
+        String role = "user";
         try {
-            UserService.getInstance().addUser(new User(login, password,role));
+            UserService.getInstance().addUser(new User(login, password, role));
         } catch (Exception e) {
             e.printStackTrace();
-            req.getRequestDispatcher("reg.jsp").forward(req,resp);
+            req.getRequestDispatcher("reg.jsp").forward(req, resp);
         }
-        req.getRequestDispatcher("reg.jsp").forward(req,resp);
+        req.getRequestDispatcher("reg.jsp").forward(req, resp);
     }
 }

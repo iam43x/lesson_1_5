@@ -12,9 +12,9 @@ public interface UserDAO {
 
     void deleteUser(Long id) throws SQLException;
 
-    void updateUser(String login, String password,String role, Long id) throws SQLException;
+    void updateUser(String login, String password, String role, Long id) throws SQLException;
 
     User getUserById(Long id) throws SQLException;
 
-    String availableUser(String login,String password) throws SQLException;
+    String availableUser(String login, String password) throws SQLException;
 }
